@@ -38,9 +38,6 @@ logs/
 # Docker
 .dockerignore
 
-# uv / pyproject (not needed for HF deployment)
-uv.lock
-
 # Local testing
 validate_local.py
 .pytest_cache/
