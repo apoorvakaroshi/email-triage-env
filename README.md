@@ -184,7 +184,9 @@ email_triage_env/
 ├── openenv.yaml       # 📋 OpenEnv metadata
 ├── Dockerfile         # 🐳 Container setup
 ├── requirements.txt   # 📦 Dependencies
-└── README.md          # 📖 This file
+├── README.md          # 📖 This file
+└──.gitignore
+
 ```
 
 ---
