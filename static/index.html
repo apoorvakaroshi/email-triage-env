@@ -6,200 +6,141 @@
   <title>EmailTriageEnv</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f3f4f6; color: #1f2937; min-height: 100vh; }
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: #f3f4f6;
-      color: #1f2937;
-      min-height: 100vh;
-    }
-
-    /* ── Hero ──────────────────────────────────────────────────────────── */
-    .hero {
-      background: linear-gradient(135deg, #1e3a8a 0%, #0e7490 55%, #0891b2 100%);
-      color: #fff;
-      text-align: center;
-      padding: 64px 24px 72px;
-    }
+    .hero { background: linear-gradient(135deg, #1e3a8a 0%, #0e7490 55%, #0891b2 100%); color: #fff; text-align: center; padding: 64px 24px 72px; }
     .hero-icon { font-size: 2.8rem; margin-bottom: 12px; }
     .hero h1 { font-size: 2.8rem; font-weight: 800; letter-spacing: -1px; }
-    .hero p {
-      margin-top: 14px;
-      font-size: 1.1rem;
-      opacity: 0.88;
-      max-width: 560px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .badges {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 28px;
-    }
-    .badge {
-      background: rgba(255,255,255,0.15);
-      border: 1px solid rgba(255,255,255,0.30);
-      color: #fff;
-      border-radius: 999px;
-      padding: 6px 18px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      backdrop-filter: blur(4px);
-    }
+    .hero p { margin-top: 14px; font-size: 1.1rem; opacity: .88; max-width: 560px; margin-left: auto; margin-right: auto; }
+    .badges { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+    .badge { background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.30); color: #fff; border-radius: 999px; padding: 6px 18px; font-size: .85rem; font-weight: 600; }
 
-    /* ── Content ───────────────────────────────────────────────────────── */
-    .content { max-width: 960px; margin: 0 auto; padding: 48px 20px 80px; }
+    .content { max-width: 980px; margin: 0 auto; padding: 48px 20px 80px; }
 
-    /* ── Stats ─────────────────────────────────────────────────────────── */
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      margin-bottom: 52px;
-    }
-    .stat-card {
-      background: #fff;
-      border-radius: 14px;
-      padding: 24px 16px;
-      text-align: center;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
-    }
-    .stat-card .number {
-      font-size: 2.2rem;
-      font-weight: 800;
-      color: #1e40af;
-      line-height: 1;
-    }
-    .stat-card .label {
-      font-size: 0.82rem;
-      color: #6b7280;
-      margin-top: 6px;
-      font-weight: 500;
-    }
+    .stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-bottom: 52px; }
+    .stat-card { background:#fff; border-radius:14px; padding:24px 16px; text-align:center; box-shadow:0 1px 4px rgba(0,0,0,.07); }
+    .stat-card .number { font-size:2.2rem; font-weight:800; color:#1e40af; line-height:1; }
+    .stat-card .label  { font-size:.82rem; color:#6b7280; margin-top:6px; font-weight:500; }
 
-    /* ── Section headers ────────────────────────────────────────────────── */
-    .section-title {
-      font-size: 1.4rem;
-      font-weight: 700;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+    .section-title { font-size:1.4rem; font-weight:700; margin-bottom:20px; display:flex; align-items:center; gap:10px; }
+    .live-badge { background:#dcfce7; color:#15803d; border-radius:999px; padding:3px 12px; font-size:.75rem; font-weight:700; }
 
-    /* ── Task cards ─────────────────────────────────────────────────────── */
-    .tasks-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 16px;
-      margin-bottom: 52px;
-    }
-    .task-card {
-      background: #fff;
-      border-radius: 14px;
-      padding: 22px 18px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
-      transition: transform 0.15s, box-shadow 0.15s;
-    }
-    .task-card:hover { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(0,0,0,0.10); }
-    .task-icon { font-size: 1.8rem; margin-bottom: 10px; }
-    .task-name { font-size: 0.97rem; font-weight: 700; margin-bottom: 8px; }
-    .task-desc { font-size: 0.82rem; color: #6b7280; line-height: 1.5; margin-bottom: 12px; }
-    .difficulty {
-      display: inline-block;
-      border-radius: 999px;
-      padding: 3px 12px;
-      font-size: 0.75rem;
-      font-weight: 600;
-    }
-    .d-easy    { background: #d1fae5; color: #065f46; }
-    .d-medium  { background: #fef3c7; color: #92400e; }
-    .d-medium-hard { background: #fed7aa; color: #9a3412; }
-    .d-hard    { background: #fee2e2; color: #991b1b; }
+    .tasks-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:16px; margin-bottom:52px; }
+    .task-card { background:#fff; border-radius:14px; padding:22px 18px; box-shadow:0 1px 4px rgba(0,0,0,.07); transition:transform .15s,box-shadow .15s; }
+    .task-card:hover { transform:translateY(-2px); box-shadow:0 4px 14px rgba(0,0,0,.10); }
+    .task-icon { font-size:1.8rem; margin-bottom:10px; }
+    .task-name { font-size:.97rem; font-weight:700; margin-bottom:8px; }
+    .task-desc { font-size:.82rem; color:#6b7280; line-height:1.5; margin-bottom:12px; }
+    .difficulty { display:inline-block; border-radius:999px; padding:3px 12px; font-size:.75rem; font-weight:600; }
+    .d-easy { background:#d1fae5; color:#065f46; }
+    .d-medium { background:#fef3c7; color:#92400e; }
+    .d-medium-hard { background:#fed7aa; color:#9a3412; }
+    .d-hard { background:#fee2e2; color:#991b1b; }
 
-    /* ── Features ───────────────────────────────────────────────────────── */
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 14px;
-      margin-bottom: 52px;
-    }
-    .feature-card {
-      background: #fff;
-      border-radius: 12px;
-      padding: 18px 16px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-    }
-    .feature-icon { font-size: 1.4rem; flex-shrink: 0; }
-    .feature-label { font-size: 0.85rem; font-weight: 600; color: #374151; }
-    .feature-sub { font-size: 0.76rem; color: #9ca3af; margin-top: 2px; }
+    .features-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:14px; margin-bottom:52px; }
+    .feature-card { background:#fff; border-radius:12px; padding:18px 16px; box-shadow:0 1px 4px rgba(0,0,0,.07); display:flex; align-items:flex-start; gap:12px; }
+    .feature-icon { font-size:1.4rem; flex-shrink:0; }
+    .feature-label { font-size:.85rem; font-weight:600; color:#374151; }
+    .feature-sub { font-size:.76rem; color:#9ca3af; margin-top:2px; }
 
-    /* ── Baseline scores ─────────────────────────────────────────────────── */
-    .scores-section { margin-bottom: 52px; }
-    .score-row {
-      background: #fff;
-      border-radius: 10px;
-      padding: 16px 20px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 10px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-    }
-    .score-name { font-family: monospace; font-size: 0.88rem; color: #374151; min-width: 200px; }
-    .score-bar-wrap { flex: 1; background: #e5e7eb; border-radius: 999px; height: 10px; overflow: hidden; }
-    .score-bar { height: 100%; background: linear-gradient(90deg, #1e3a8a, #0891b2); border-radius: 999px; transition: width 1s ease; }
-    .score-val { font-weight: 700; font-size: 0.92rem; min-width: 46px; text-align: right; color: #1f2937; }
-    .score-check { color: #10b981; font-size: 1.1rem; }
+    .score-row { background:#fff; border-radius:10px; padding:16px 20px; display:flex; align-items:center; gap:16px; margin-bottom:10px; box-shadow:0 1px 3px rgba(0,0,0,.06); }
+    .score-name { font-family:monospace; font-size:.88rem; color:#374151; min-width:210px; }
+    .score-bar-wrap { flex:1; background:#e5e7eb; border-radius:999px; height:10px; overflow:hidden; }
+    .score-bar { height:100%; background:linear-gradient(90deg,#1e3a8a,#0891b2); border-radius:999px; }
+    .score-val { font-weight:700; font-size:.92rem; min-width:46px; text-align:right; }
+    .score-check { color:#10b981; font-size:1.1rem; }
 
-    /* ── API Endpoints ───────────────────────────────────────────────────── */
-    .endpoints-section { margin-bottom: 52px; }
-    .endpoint {
-      background: #fff;
-      border-radius: 10px;
-      padding: 16px 20px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 10px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-    }
-    .method {
-      border-radius: 6px;
-      padding: 4px 10px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      min-width: 50px;
-      text-align: center;
-    }
-    .get  { background: #dbeafe; color: #1d4ed8; }
-    .post { background: #dcfce7; color: #15803d; }
-    .ep-path { font-family: monospace; font-weight: 700; color: #1d4ed8; font-size: 0.92rem; min-width: 110px; }
-    .ep-desc { font-size: 0.85rem; color: #6b7280; }
+    a.endpoint { text-decoration:none; color:inherit; display:block; }
+    .endpoint { background:#fff; border-radius:10px; padding:16px 20px; display:flex; align-items:center; gap:14px; margin-bottom:10px; box-shadow:0 1px 3px rgba(0,0,0,.06); transition:background .12s; border-left:3px solid transparent; }
+    a.endpoint:hover .endpoint { background:#f0f9ff; border-left-color:#1d4ed8; }
+    .method { border-radius:6px; padding:4px 10px; font-size:.75rem; font-weight:700; min-width:50px; text-align:center; }
+    .get  { background:#dbeafe; color:#1d4ed8; }
+    .post { background:#dcfce7; color:#15803d; }
+    .ep-path { font-family:monospace; font-weight:700; color:#1d4ed8; font-size:.92rem; min-width:110px; }
+    .ep-desc { font-size:.85rem; color:#6b7280; flex:1; }
+    .ep-arrow { margin-left:auto; color:#9ca3af; }
 
-    /* ── Footer ─────────────────────────────────────────────────────────── */
-    footer { text-align: center; font-size: 0.80rem; color: #9ca3af; padding: 24px 0 40px; }
-    footer a { color: #6b7280; text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
+    /* PLAYGROUND */
+    .playground { background:#fff; border-radius:20px; box-shadow:0 4px 24px rgba(0,0,0,.10); padding:36px 32px; margin-bottom:52px; border:2px solid #e0e7ff; }
+    .pg-header { display:flex; align-items:center; gap:14px; margin-bottom:28px; }
+    .pg-header h2 { font-size:1.3rem; font-weight:800; color:#1e3a8a; }
+    .pg-header p  { font-size:.85rem; color:#6b7280; margin-top:2px; }
+    .pg-step { margin-bottom:22px; }
+    .pg-label { font-size:.78rem; font-weight:700; color:#6b7280; text-transform:uppercase; letter-spacing:.06em; margin-bottom:10px; }
 
-    .ep-arrow { margin-left: auto; color: #9ca3af; font-size: 1rem; }
-    a.endpoint { text-decoration: none; color: inherit; cursor: pointer; }
-    a.endpoint:hover { background: #f0f9ff; border-left: 3px solid #1d4ed8; }
+    .task-pills { display:flex; flex-wrap:wrap; gap:8px; }
+    .task-pill { border:2px solid #e5e7eb; border-radius:999px; padding:7px 16px; font-size:.82rem; font-weight:600; cursor:pointer; background:#fff; color:#374151; transition:all .15s; }
+    .task-pill:hover { border-color:#6366f1; color:#6366f1; }
+    .task-pill.active { background:#1e3a8a; border-color:#1e3a8a; color:#fff; }
 
-    @media (max-width: 640px) {
-      .stats { grid-template-columns: repeat(2, 1fr); }
-      .hero h1 { font-size: 2rem; }
-    }
+    .email-box { background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:20px; min-height:100px; font-size:.88rem; line-height:1.65; display:none; }
+    .email-box.visible { display:block; }
+    .email-meta { display:flex; flex-wrap:wrap; gap:12px; margin-bottom:12px; padding-bottom:12px; border-bottom:1px solid #e2e8f0; font-size:.78rem; }
+    .trust-high   { color:#10b981; font-weight:700; }
+    .trust-medium { color:#f59e0b; font-weight:700; }
+    .trust-low    { color:#ef4444; font-weight:700; }
+    .adv-warn { background:#fef2f2; border:1px solid #fecaca; border-radius:8px; padding:8px 14px; margin-bottom:10px; font-size:.82rem; color:#b91c1c; font-weight:600; }
+    .email-subject { font-weight:700; font-size:1rem; margin-bottom:8px; color:#1e3a8a; }
+    .email-body { white-space:pre-wrap; color:#374151; }
+    .thread-msg { background:#fff; border:1px solid #e2e8f0; border-radius:8px; padding:12px; margin-bottom:8px; }
+    .thread-turn { font-size:.75rem; color:#6b7280; margin-bottom:4px; font-weight:600; }
+
+    .action-area { display:none; }
+    .action-area.visible { display:block; }
+    .action-label { font-size:.82rem; font-weight:600; color:#374151; margin-bottom:6px; }
+
+    .tag-grid { display:flex; flex-wrap:wrap; gap:8px; }
+    .tag-toggle { border:2px solid #e5e7eb; border-radius:999px; padding:5px 14px; font-size:.78rem; font-weight:600; cursor:pointer; background:#fff; color:#6b7280; transition:all .15s; }
+    .tag-toggle:hover { border-color:#6366f1; color:#6366f1; }
+    .tag-toggle.active { background:#6366f1; border-color:#6366f1; color:#fff; }
+
+    textarea.pg-textarea { width:100%; border:1.5px solid #d1d5db; border-radius:8px; padding:10px 12px; font-size:.88rem; font-family:inherit; background:#fff; color:#1f2937; transition:border-color .15s; outline:none; resize:vertical; min-height:100px; }
+    textarea.pg-textarea:focus { border-color:#6366f1; }
+
+    .ranking-list { list-style:none; }
+    .ranking-item { background:#fff; border:1.5px solid #d1d5db; border-radius:8px; padding:10px 14px; margin-bottom:6px; cursor:grab; display:flex; align-items:center; gap:10px; font-size:.85rem; user-select:none; transition:background .1s; }
+    .ranking-item:hover { background:#f0f9ff; }
+    .ranking-item:active { cursor:grabbing; }
+    .rank-num { font-weight:700; color:#6366f1; min-width:22px; }
+    .drag-handle { color:#9ca3af; }
+
+    .pg-submit { background:linear-gradient(135deg,#1e3a8a,#0891b2); color:#fff; border:none; border-radius:10px; padding:12px 28px; font-size:.95rem; font-weight:700; cursor:pointer; transition:opacity .15s; margin-top:16px; display:inline-flex; align-items:center; gap:8px; }
+    .pg-submit:hover { opacity:.9; }
+    .pg-submit:disabled { opacity:.5; cursor:not-allowed; }
+
+    .result-panel { margin-top:20px; border-radius:14px; padding:22px; display:none; animation:fadeIn .3s ease; }
+    .result-panel.visible { display:block; }
+    .result-panel.pass { background:#f0fdf4; border:2px solid #86efac; }
+    .result-panel.warn { background:#fffbeb; border:2px solid #fde68a; }
+    .result-panel.fail { background:#fef2f2; border:2px solid #fca5a5; }
+    .result-top { display:flex; align-items:center; gap:16px; margin-bottom:12px; }
+    .result-score { font-size:2.6rem; font-weight:800; }
+    .pass .result-score { color:#16a34a; }
+    .warn .result-score { color:#d97706; }
+    .fail .result-score { color:#dc2626; }
+    .result-label { font-size:1rem; font-weight:700; }
+    .result-sub { font-size:.82rem; color:#6b7280; margin-top:2px; }
+    .result-bar-wrap { background:#e5e7eb; border-radius:999px; height:12px; overflow:hidden; margin-bottom:14px; }
+    .result-bar { height:100%; border-radius:999px; transition:width 1.2s ease; }
+    .pass .result-bar { background:linear-gradient(90deg,#16a34a,#22c55e); }
+    .warn .result-bar { background:linear-gradient(90deg,#d97706,#f59e0b); }
+    .fail .result-bar { background:linear-gradient(90deg,#dc2626,#ef4444); }
+    .result-details { font-size:.82rem; color:#374151; line-height:1.8; }
+    .result-details code { background:#f3f4f6; padding:2px 6px; border-radius:4px; font-family:monospace; font-size:.80rem; }
+    .pg-again { background:#fff; border:2px solid #e5e7eb; border-radius:8px; padding:8px 18px; font-size:.85rem; font-weight:600; cursor:pointer; color:#374151; transition:border-color .15s; margin-top:12px; }
+    .pg-again:hover { border-color:#1e3a8a; color:#1e3a8a; }
+
+    .spinner { display:inline-block; width:15px; height:15px; border:2px solid rgba(255,255,255,.4); border-top-color:#fff; border-radius:50%; animation:spin .7s linear infinite; }
+    @keyframes spin { to { transform:rotate(360deg); } }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
+
+    footer { text-align:center; font-size:.80rem; color:#9ca3af; padding:24px 0 40px; }
+    footer a { color:#6b7280; text-decoration:none; }
+    @media(max-width:640px) { .stats{grid-template-columns:repeat(2,1fr);} .hero h1{font-size:2rem;} .playground{padding:20px 16px;} }
   </style>
 </head>
 <body>
 
-<!-- ── Hero ──────────────────────────────────────────────────────────────── -->
 <div class="hero">
   <div class="hero-icon">📧</div>
   <h1>EmailTriageEnv</h1>
@@ -212,200 +153,289 @@
   </div>
 </div>
 
-<!-- ── Content ───────────────────────────────────────────────────────────── -->
 <div class="content">
 
-  <!-- Stats -->
   <div class="stats">
     <div class="stat-card"><div class="number">6</div><div class="label">Tasks</div></div>
     <div class="stat-card"><div class="number">15</div><div class="label">Emails</div></div>
-    <div class="stat-card"><div class="number">&lt; 1.0</div><div class="label">Max Reward (strict)</div></div>
+    <div class="stat-card"><div class="number">(0,1)</div><div class="label">Reward Range</div></div>
     <div class="stat-card"><div class="number">100%</div><div class="label">Deterministic</div></div>
   </div>
 
-  <!-- Tasks -->
   <div class="section-title">📋 Tasks</div>
   <div class="tasks-grid">
-    <div class="task-card">
-      <div class="task-icon">🏷️</div>
-      <div class="task-name">Email Classification</div>
-      <div class="task-desc">Classify emails into 7 categories: billing, support, spam, urgent and more</div>
-      <span class="difficulty d-easy">Easy</span>
+    <div class="task-card"><div class="task-icon">🏷️</div><div class="task-name">Email Classification</div><div class="task-desc">Classify emails into 7 categories: billing, support, spam, urgent and more</div><span class="difficulty d-easy">Easy</span></div>
+    <div class="task-card"><div class="task-icon">📊</div><div class="task-name">Inbox Prioritization</div><div class="task-desc">Rank 5 emails from most to least urgent using Kendall tau scoring</div><span class="difficulty d-medium">Medium</span></div>
+    <div class="task-card"><div class="task-icon">🔖</div><div class="task-name">Email Tagging</div><div class="task-desc">Apply all relevant tags from a 12-tag vocabulary, scored by F1</div><span class="difficulty d-medium-hard">Medium-Hard</span></div>
+    <div class="task-card"><div class="task-icon">✍️</div><div class="task-name">Reply Drafting</div><div class="task-desc">Draft professional replies covering all required talking points</div><span class="difficulty d-hard">Hard</span></div>
+    <div class="task-card"><div class="task-icon">📝</div><div class="task-name">Email Summarization</div><div class="task-desc">Summarize workplace emails in 10–60 words covering all key points</div><span class="difficulty d-medium">Medium</span></div>
+    <div class="task-card"><div class="task-icon">🗂️</div><div class="task-name">Thread Classification</div><div class="task-desc">Classify multi-turn email threads and extract the key issue</div><span class="difficulty d-hard">Hard</span></div>
+  </div>
+
+  <!-- INTERACTIVE PLAYGROUND -->
+  <div class="section-title">🎮 Interactive Playground <span class="live-badge">LIVE</span></div>
+  <div class="playground">
+    <div class="pg-header">
+      <div style="font-size:2.2rem">🧪</div>
+      <div>
+        <h2>Try the Environment Yourself</h2>
+        <p>Pick a task → load a real email → submit your answer → see reward score live</p>
+      </div>
     </div>
-    <div class="task-card">
-      <div class="task-icon">📊</div>
-      <div class="task-name">Inbox Prioritization</div>
-      <div class="task-desc">Rank 5 emails from most to least urgent using Kendall tau scoring</div>
-      <span class="difficulty d-medium">Medium</span>
+
+    <div class="pg-step">
+      <div class="pg-label">① Choose a Task</div>
+      <div class="task-pills">
+        <button class="task-pill active" data-task="email_classification">🏷️ Classification</button>
+        <button class="task-pill" data-task="inbox_prioritization">📊 Prioritization</button>
+        <button class="task-pill" data-task="email_tagging">🔖 Tagging</button>
+        <button class="task-pill" data-task="reply_drafting">✍️ Reply Drafting</button>
+        <button class="task-pill" data-task="email_summarization">📝 Summarization</button>
+        <button class="task-pill" data-task="thread_classification">🗂️ Thread</button>
+      </div>
     </div>
-    <div class="task-card">
-      <div class="task-icon">🏷️</div>
-      <div class="task-name">Email Tagging</div>
-      <div class="task-desc">Apply all relevant tags from a 12-tag vocabulary, scored by F1</div>
-      <span class="difficulty d-medium-hard">Medium-Hard</span>
+
+    <div class="pg-step">
+      <div class="pg-label">② Load an Email from the Environment</div>
+      <button class="pg-submit" id="resetBtn" style="margin-top:0"><span id="resetTxt">📥 Load Email</span></button>
+      <div class="email-box" id="emailBox" style="margin-top:14px"></div>
     </div>
-    <div class="task-card">
-      <div class="task-icon">✍️</div>
-      <div class="task-name">Reply Drafting</div>
-      <div class="task-desc">Draft professional replies covering all required talking points</div>
-      <span class="difficulty d-hard">Hard</span>
+
+    <div class="action-area pg-step" id="actionArea">
+      <div class="pg-label">③ Submit Your Answer</div>
+      <div id="actionInputs"></div>
+      <button class="pg-submit" id="submitBtn"><span id="submitTxt">🚀 Submit &amp; Score</span></button>
     </div>
-    <div class="task-card">
-      <div class="task-icon">📝</div>
-      <div class="task-name">Email Summarization</div>
-      <div class="task-desc">Summarize workplace emails in 10-60 words covering all key points</div>
-      <span class="difficulty d-medium">Medium</span>
-    </div>
-    <div class="task-card">
-      <div class="task-icon">🗂️</div>
-      <div class="task-name">Thread Classification</div>
-      <div class="task-desc">Classify multi-turn email threads and extract the key issue</div>
-      <span class="difficulty d-hard">Hard</span>
+
+    <div class="result-panel" id="resultPanel">
+      <div class="result-top">
+        <div class="result-score" id="rScore">0.00</div>
+        <div><div class="result-label" id="rLabel">Score</div><div class="result-sub" id="rSub"></div></div>
+      </div>
+      <div class="result-bar-wrap"><div class="result-bar" id="rBar" style="width:0%"></div></div>
+      <div class="result-details" id="rDetails"></div>
+      <button class="pg-again" id="againBtn">🔄 Try Another Email</button>
     </div>
   </div>
 
-  <!-- Unique Features -->
   <div class="section-title">✨ Unique Features</div>
   <div class="features-grid">
-    <div class="feature-card">
-      <div class="feature-icon">🎭</div>
-      <div>
-        <div class="feature-label">Adversarial Emails</div>
-        <div class="feature-sub">Phishing &amp; social engineering detection</div>
-      </div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🔗</div>
-      <div>
-        <div class="feature-label">Multi-Turn Threads</div>
-        <div class="feature-sub">3 realistic back-and-forth email chains</div>
-      </div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🔒</div>
-      <div>
-        <div class="feature-label">Sender Trust Scores</div>
-        <div class="feature-sub">Per-email domain trust signals</div>
-      </div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">📐</div>
-      <div>
-        <div class="feature-label">Strict Score Range</div>
-        <div class="feature-sub">All rewards in open interval (0, 1)</div>
-      </div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🧮</div>
-      <div>
-        <div class="feature-label">Kendall Tau Ranking</div>
-        <div class="feature-sub">Graded ordering for prioritization</div>
-      </div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🎯</div>
-      <div>
-        <div class="feature-label">F1 Tag Scoring</div>
-        <div class="feature-sub">Partial credit for tag overlap</div>
-      </div>
-    </div>
+    <div class="feature-card"><div class="feature-icon">🎭</div><div><div class="feature-label">Adversarial Emails</div><div class="feature-sub">Phishing &amp; social engineering detection</div></div></div>
+    <div class="feature-card"><div class="feature-icon">🔗</div><div><div class="feature-label">Multi-Turn Threads</div><div class="feature-sub">3 realistic back-and-forth email chains</div></div></div>
+    <div class="feature-card"><div class="feature-icon">🔒</div><div><div class="feature-label">Sender Trust Scores</div><div class="feature-sub">Per-email domain trust signal (0–1)</div></div></div>
+    <div class="feature-card"><div class="feature-icon">📐</div><div><div class="feature-label">Strict Score Range</div><div class="feature-sub">All rewards in open interval (0,1) — never 0 or 1</div></div></div>
+    <div class="feature-card"><div class="feature-icon">🧮</div><div><div class="feature-label">Kendall Tau Ranking</div><div class="feature-sub">Graded ordering for prioritization</div></div></div>
+    <div class="feature-card"><div class="feature-icon">🎯</div><div><div class="feature-label">F1 Tag Scoring</div><div class="feature-sub">Partial credit for tag overlap</div></div></div>
   </div>
 
-  <!-- Baseline Scores -->
-  <div class="section-title scores-section">📊 Baseline Scores</div>
-  <div id="scores">
-    <div class="score-row">
-      <div class="score-name">email_classification</div>
-      <div class="score-bar-wrap"><div class="score-bar" style="width:90%"></div></div>
-      <div class="score-val">0.90</div>
-      <div class="score-check">✅</div>
-    </div>
-    <div class="score-row">
-      <div class="score-name">inbox_prioritization</div>
-      <div class="score-bar-wrap"><div class="score-bar" style="width:78%"></div></div>
-      <div class="score-val">0.78</div>
-      <div class="score-check">✅</div>
-    </div>
-    <div class="score-row">
-      <div class="score-name">email_tagging</div>
-      <div class="score-bar-wrap"><div class="score-bar" style="width:74%"></div></div>
-      <div class="score-val">0.74</div>
-      <div class="score-check">✅</div>
-    </div>
-    <div class="score-row">
-      <div class="score-name">reply_drafting</div>
-      <div class="score-bar-wrap"><div class="score-bar" style="width:71%"></div></div>
-      <div class="score-val">0.71</div>
-      <div class="score-check">✅</div>
-    </div>
-    <div class="score-row">
-      <div class="score-name">email_summarization</div>
-      <div class="score-bar-wrap"><div class="score-bar" style="width:80%"></div></div>
-      <div class="score-val">0.80</div>
-      <div class="score-check">✅</div>
-    </div>
-    <div class="score-row">
-      <div class="score-name">thread_classification</div>
-      <div class="score-bar-wrap"><div class="score-bar" style="width:68%"></div></div>
-      <div class="score-val">0.68</div>
-      <div class="score-check">✅</div>
-    </div>
+  <div class="section-title">📊 Baseline Scores</div>
+  <div style="margin-bottom:52px">
+    <div class="score-row"><div class="score-name">email_classification</div><div class="score-bar-wrap"><div class="score-bar" style="width:90%"></div></div><div class="score-val">0.90</div><div class="score-check">✅</div></div>
+    <div class="score-row"><div class="score-name">inbox_prioritization</div><div class="score-bar-wrap"><div class="score-bar" style="width:78%"></div></div><div class="score-val">0.78</div><div class="score-check">✅</div></div>
+    <div class="score-row"><div class="score-name">email_tagging</div><div class="score-bar-wrap"><div class="score-bar" style="width:74%"></div></div><div class="score-val">0.74</div><div class="score-check">✅</div></div>
+    <div class="score-row"><div class="score-name">reply_drafting</div><div class="score-bar-wrap"><div class="score-bar" style="width:71%"></div></div><div class="score-val">0.71</div><div class="score-check">✅</div></div>
+    <div class="score-row"><div class="score-name">email_summarization</div><div class="score-bar-wrap"><div class="score-bar" style="width:80%"></div></div><div class="score-val">0.80</div><div class="score-check">✅</div></div>
+    <div class="score-row"><div class="score-name">thread_classification</div><div class="score-bar-wrap"><div class="score-bar" style="width:68%"></div></div><div class="score-val">0.68</div><div class="score-check">✅</div></div>
   </div>
 
-  <!-- API Endpoints -->
-  <div class="section-title" style="margin-top:52px">🔌 API Endpoints</div>
-  <div class="endpoints-section">
-    <a class="endpoint" href="/health" target="_blank">
-      <span class="method get">GET</span>
-      <span class="ep-path">/health</span>
-      <span class="ep-desc">Liveness probe</span>
-      <span class="ep-arrow">↗</span>
-    </a>
-    <a class="endpoint" href="/tasks" target="_blank">
-      <span class="method get">GET</span>
-      <span class="ep-path">/tasks</span>
-      <span class="ep-desc">List all tasks</span>
-      <span class="ep-arrow">↗</span>
-    </a>
-    <a class="endpoint" href="/docs#/default/reset_reset_post" target="_blank">
-      <span class="method post">POST</span>
-      <span class="ep-path">/reset</span>
-      <span class="ep-desc">Reset environment, get initial observation</span>
-      <span class="ep-arrow">↗</span>
-    </a>
-    <a class="endpoint" href="/docs#/default/step_step_post" target="_blank">
-      <span class="method post">POST</span>
-      <span class="ep-path">/step</span>
-      <span class="ep-desc">Take action, get reward and next observation</span>
-      <span class="ep-arrow">↗</span>
-    </a>
-    <a class="endpoint" href="/state" target="_blank">
-      <span class="method get">GET</span>
-      <span class="ep-path">/state</span>
-      <span class="ep-desc">Get current environment state</span>
-      <span class="ep-arrow">↗</span>
-    </a>
-    <a class="endpoint" href="/docs" target="_blank">
-      <span class="method get">GET</span>
-      <span class="ep-path">/docs</span>
-      <span class="ep-desc">Interactive API documentation (Swagger)</span>
-      <span class="ep-arrow">↗</span>
-    </a>
-    <a class="endpoint" href="/redoc" target="_blank">
-      <span class="method get">GET</span>
-      <span class="ep-path">/redoc</span>
-      <span class="ep-desc">Alternative API documentation (ReDoc)</span>
-      <span class="ep-arrow">↗</span>
-    </a>
+  <div class="section-title">🔌 API Endpoints</div>
+  <div style="margin-bottom:52px">
+    <a class="endpoint" href="/health" target="_blank"><div class="endpoint"><span class="method get">GET</span><span class="ep-path">/health</span><span class="ep-desc">Liveness probe</span><span class="ep-arrow">↗</span></div></a>
+    <a class="endpoint" href="/tasks"  target="_blank"><div class="endpoint"><span class="method get">GET</span><span class="ep-path">/tasks</span><span class="ep-desc">List all tasks</span><span class="ep-arrow">↗</span></div></a>
+    <a class="endpoint" href="/docs#/default/reset_reset_post" target="_blank"><div class="endpoint"><span class="method post">POST</span><span class="ep-path">/reset</span><span class="ep-desc">Reset environment, get initial observation</span><span class="ep-arrow">↗</span></div></a>
+    <a class="endpoint" href="/docs#/default/step_step_post"  target="_blank"><div class="endpoint"><span class="method post">POST</span><span class="ep-path">/step</span><span class="ep-desc">Take action, get reward and next observation</span><span class="ep-arrow">↗</span></div></a>
+    <a class="endpoint" href="/state" target="_blank"><div class="endpoint"><span class="method get">GET</span><span class="ep-path">/state</span><span class="ep-desc">Get current environment state</span><span class="ep-arrow">↗</span></div></a>
+    <a class="endpoint" href="/docs"  target="_blank"><div class="endpoint"><span class="method get">GET</span><span class="ep-path">/docs</span><span class="ep-desc">Interactive Swagger UI</span><span class="ep-arrow">↗</span></div></a>
+    <a class="endpoint" href="/redoc" target="_blank"><div class="endpoint"><span class="method get">GET</span><span class="ep-path">/redoc</span><span class="ep-desc">Alternative ReDoc documentation</span><span class="ep-arrow">↗</span></div></a>
   </div>
 
 </div>
 
 <footer>
   Built by <a href="https://huggingface.co/appuk10">Apoorva Karoshi</a> &nbsp;|&nbsp;
-  Powered by <a href="https://openenv.dev">OpenEnv</a> &amp;
-  <a href="https://huggingface.co">Hugging Face</a>
+  Powered by <a href="https://openenv.dev">OpenEnv</a> &amp; <a href="https://huggingface.co">Hugging Face</a>
 </footer>
 
+<script>
+const TAGS = ["billing","payment","invoice","overdue","support","technical","login","api","urgent","critical","security","spam","phishing","newsletter","complaint","refund","how-to","export","missing-item","social-engineering","subscription","meeting"];
+const CATS = ["billing","support","spam","urgent","general","newsletter","complaint"];
+let currentTask = 'email_classification', currentObs = null, dragSrc = null;
+
+document.querySelectorAll('.task-pill').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.task-pill').forEach(x => x.classList.remove('active'));
+  b.classList.add('active');
+  currentTask = b.dataset.task;
+  document.getElementById('emailBox').classList.remove('visible');
+  document.getElementById('emailBox').innerHTML = '';
+  document.getElementById('actionArea').classList.remove('visible');
+  document.getElementById('resultPanel').classList.remove('visible');
+  currentObs = null;
+}));
+
+document.getElementById('resetBtn').addEventListener('click', loadEmail);
+document.getElementById('againBtn').addEventListener('click', () => { document.getElementById('resultPanel').classList.remove('visible'); loadEmail(); });
+
+async function loadEmail() {
+  const txt = document.getElementById('resetTxt');
+  const btn = document.getElementById('resetBtn');
+  txt.innerHTML = '<span class="spinner"></span> Loading…';
+  btn.disabled = true;
+  try {
+    const r = await fetch('/reset', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({task_name: currentTask}) });
+    const d = await r.json();
+    currentObs = d.observation;
+    renderEmail(currentObs);
+    renderInputs(currentObs);
+    document.getElementById('actionArea').classList.add('visible');
+    document.getElementById('resultPanel').classList.remove('visible');
+  } catch(e) { alert('Error: ' + e); }
+  finally { txt.textContent = '📥 Load Another'; btn.disabled = false; }
+}
+
+function renderEmail(obs) {
+  const box = document.getElementById('emailBox');
+  const t = obs.sender_trust_score;
+  const tc = t >= .7 ? 'trust-high' : t >= .4 ? 'trust-medium' : 'trust-low';
+  const tl = t >= .7 ? '✅ Trusted' : t >= .4 ? '⚠️ Moderate' : '🚨 Suspicious';
+  let h = '';
+  if (t < .3) h += `<div class="adv-warn">⚠️ LOW TRUST SCORE (${t.toFixed(2)}) — Possible phishing or social-engineering email!</div>`;
+  if (obs.task_name === 'thread_classification' && obs.thread?.length) {
+    h += `<div class="email-subject">${obs.subject}</div>`;
+    obs.thread.forEach(m => h += `<div class="thread-msg"><div class="thread-turn">Turn ${m.turn} · ${m.sender} · ${m.timestamp}</div>${m.body}</div>`);
+  } else if (obs.task_name === 'inbox_prioritization') {
+    h += `<div class="email-subject">📥 Rank these 5 emails (most → least urgent)</div>`;
+    (obs.emails_to_rank||[]).forEach(e => {
+      const etc = e.sender_trust_score>=.7?'trust-high':e.sender_trust_score>=.4?'trust-medium':'trust-low';
+      h += `<div class="thread-msg"><strong>${e.id}</strong> — ${e.subject}<br><small>From: ${e.sender} | Trust: <span class="${etc}">${e.sender_trust_score.toFixed(2)}</span></small><br><span style="font-size:.82rem;color:#6b7280">${(e.body||'').substring(0,140)}…</span></div>`;
+    });
+  } else {
+    h += `<div class="email-meta"><span><strong>From:</strong> ${obs.sender}</span><span><strong>Trust:</strong> <span class="${tc}">${tl} (${t.toFixed(2)})</span></span><span><strong>ID:</strong> ${obs.email_id}</span></div>`;
+    h += `<div class="email-subject">${obs.subject}</div><div class="email-body">${obs.body}</div>`;
+  }
+  box.innerHTML = h;
+  box.classList.add('visible');
+}
+
+function renderInputs(obs) {
+  const area = document.getElementById('actionInputs');
+  const task = obs.task_name;
+  let h = '';
+  if (task === 'email_classification') {
+    h = `<div class="action-label">Select Category</div><div class="tag-grid" id="catGrid">${CATS.map(c=>`<button class="tag-toggle" data-val="${c}">${c}</button>`).join('')}</div>
+    <div style="margin-top:12px;font-size:.85rem"><label><input type="checkbox" id="advCheck" style="margin-right:6px"> Mark as Adversarial / Phishing</label></div>`;
+  } else if (task === 'inbox_prioritization') {
+    const emails = obs.emails_to_rank || [];
+    h = `<div class="action-label">Drag to rank (most urgent at top)</div><ul class="ranking-list" id="rankList">${emails.map(e=>`<li class="ranking-item" draggable="true" data-id="${e.id}"><span class="drag-handle">⠿</span><span class="rank-num">-</span><strong>${e.id}</strong> — ${e.subject.substring(0,55)}</li>`).join('')}</ul>`;
+  } else if (task === 'email_tagging') {
+    h = `<div class="action-label">Select all relevant tags</div><div class="tag-grid" id="tagGrid">${TAGS.map(t=>`<button class="tag-toggle" data-val="${t}">${t}</button>`).join('')}</div>`;
+  } else if (task === 'reply_drafting') {
+    const pts = obs.info?.required_talking_points || [];
+    h = `<div class="action-label">Write Your Professional Reply</div>${pts.length?`<div style="font-size:.78rem;color:#6b7280;margin-bottom:8px">Cover: ${pts.join(' · ')}</div>`:''}<textarea class="pg-textarea" id="replyTxt" placeholder="Dear Customer,\n\nThank you for reaching out..."></textarea>`;
+  } else if (task === 'email_summarization') {
+    h = `<div class="action-label">Write a Summary (10–60 words)</div><textarea class="pg-textarea" id="sumTxt" style="min-height:70px" placeholder="Summarize in 10-60 words..."></textarea><div id="wc" style="font-size:.76rem;color:#9ca3af;margin-top:4px">0 words</div>`;
+  } else if (task === 'thread_classification') {
+    h = `<div class="action-label">Thread Category</div><div class="tag-grid" id="threadCats" style="margin-bottom:14px">${CATS.map(c=>`<button class="tag-toggle" data-val="${c}">${c}</button>`).join('')}</div><div class="action-label">Key Issue (one sentence)</div><textarea class="pg-textarea" id="issueTxt" style="min-height:60px" placeholder="Describe the main issue in one sentence..."></textarea>`;
+  }
+  area.innerHTML = h;
+  area.querySelectorAll('.tag-toggle').forEach(b => b.addEventListener('click', () => b.classList.toggle('active')));
+  if (task === 'inbox_prioritization') setupDrag();
+  if (task === 'email_summarization') {
+    document.getElementById('sumTxt').addEventListener('input', function() {
+      const wc = this.value.trim().split(/\s+/).filter(Boolean).length;
+      const el = document.getElementById('wc');
+      el.textContent = wc + ' words';
+      el.style.color = wc>=10&&wc<=60 ? '#16a34a' : '#dc2626';
+    });
+  }
+}
+
+function setupDrag() {
+  const list = document.getElementById('rankList');
+  if (!list) return;
+  updateNums();
+  list.querySelectorAll('.ranking-item').forEach(item => {
+    item.addEventListener('dragstart', () => { dragSrc = item; item.style.opacity='.4'; });
+    item.addEventListener('dragend',   () => { item.style.opacity='1'; updateNums(); });
+    item.addEventListener('dragover',  e => e.preventDefault());
+    item.addEventListener('drop', e => {
+      e.preventDefault();
+      if (dragSrc !== item) {
+        const all = [...list.querySelectorAll('.ranking-item')];
+        all.indexOf(dragSrc) < all.indexOf(item) ? item.after(dragSrc) : item.before(dragSrc);
+        updateNums();
+      }
+    });
+  });
+}
+function updateNums() {
+  document.querySelectorAll('#rankList .ranking-item').forEach((item,i) => item.querySelector('.rank-num').textContent = (i+1)+'.');
+}
+
+document.getElementById('submitBtn').addEventListener('click', async () => {
+  if (!currentObs) return;
+  const task = currentObs.task_name;
+  let action = {};
+  if (task === 'email_classification') {
+    const cat = document.querySelector('#catGrid .tag-toggle.active');
+    if (!cat) { alert('Select a category!'); return; }
+    action = { category: cat.dataset.val, is_adversarial: document.getElementById('advCheck').checked };
+  } else if (task === 'inbox_prioritization') {
+    action = { ranking: [...document.querySelectorAll('#rankList .ranking-item')].map(i=>i.dataset.id) };
+  } else if (task === 'email_tagging') {
+    const tags = [...document.querySelectorAll('#tagGrid .tag-toggle.active')].map(b=>b.dataset.val);
+    if (!tags.length) { alert('Select at least one tag!'); return; }
+    action = { tags };
+  } else if (task === 'reply_drafting') {
+    const reply = document.getElementById('replyTxt').value.trim();
+    if (!reply) { alert('Write a reply!'); return; }
+    action = { reply };
+  } else if (task === 'email_summarization') {
+    const summary = document.getElementById('sumTxt').value.trim();
+    if (!summary) { alert('Write a summary!'); return; }
+    action = { summary };
+  } else if (task === 'thread_classification') {
+    const cat = document.querySelector('#threadCats .tag-toggle.active');
+    if (!cat) { alert('Select a category!'); return; }
+    const key_issue = document.getElementById('issueTxt').value.trim();
+    if (!key_issue) { alert('Describe the key issue!'); return; }
+    action = { category: cat.dataset.val, key_issue };
+  }
+
+  const btn = document.getElementById('submitBtn');
+  const txt = document.getElementById('submitTxt');
+  txt.innerHTML = '<span class="spinner"></span> Scoring…';
+  btn.disabled = true;
+  try {
+    const r = await fetch('/step', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({task, action}) });
+    const d = await r.json();
+    showResult(d);
+  } catch(e) { alert('Error: ' + e); }
+  finally { txt.textContent = '🚀 Submit & Score'; btn.disabled = false; }
+});
+
+function showResult(data) {
+  const reward = data.reward || 0;
+  const info = data.info || {};
+  const pct = (reward * 100).toFixed(1);
+  const cls = reward >= .7 ? 'pass' : reward >= .4 ? 'warn' : 'fail';
+  const emoji = reward >= .7 ? '🎉' : reward >= .4 ? '⚠️' : '❌';
+  const lbl = reward >= .7 ? 'Great Score!' : reward >= .4 ? 'Partial Credit' : 'Low Score — Try Again';
+  const panel = document.getElementById('resultPanel');
+  panel.className = 'result-panel visible ' + cls;
+  document.getElementById('rScore').textContent = reward.toFixed(4);
+  document.getElementById('rLabel').textContent = emoji + ' ' + lbl;
+  document.getElementById('rSub').textContent = pct + '% — strictly between 0 and 1';
+  document.getElementById('rBar').style.width = pct + '%';
+  let det = '';
+  if (info.ground_truth_category) det += `✅ Ground truth: <code>${info.ground_truth_category}</code> | Your answer: <code>${info.predicted_category||'—'}</code><br>`;
+  if (info.ground_truth_tags) det += `✅ Expected tags: <code>${info.ground_truth_tags.join(', ')}</code><br>📝 Your tags: <code>${(info.predicted_tags||[]).join(', ')}</code><br>`;
+  if (info.ground_truth_order) det += `✅ Correct order: <code>${info.ground_truth_order.join(' → ')}</code><br>`;
+  if (info.word_count !== undefined) det += `📝 Word count: <code>${info.word_count}</code><br>`;
+  if (info.required_talking_points) det += `📋 Required points: <code>${info.required_talking_points.join(' · ')}</code><br>`;
+  if (info.error) det += `⚠️ <code>${info.error}</code>`;
+  document.getElementById('rDetails').innerHTML = det;
+  panel.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+</script>
 </body>
 </html>
