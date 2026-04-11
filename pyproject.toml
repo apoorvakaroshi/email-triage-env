@@ -15,3 +15,4 @@ dependencies = [
 
 [project.scripts]
 server = "app.main:app"
+# OpenEnv email triage environment
