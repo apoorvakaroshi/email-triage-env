@@ -1,0 +1,65 @@
+name: email-triage-env
+version: "1.0.0"
+description: >
+  A real-world email triage environment for training and evaluating AI agents.
+  Agents must classify, prioritize, tag, summarize, and reply to workplace emails
+  including adversarial phishing attempts and multi-turn threads.
+author: appuk10
+tags:
+  - email
+  - triage
+  - nlp
+  - real-world
+  - classification
+  - prioritization
+
+tasks:
+  - name: email_classification
+    difficulty: easy
+    description: "Classify an email into one of 7 categories: billing, support, spam, urgent, general, newsletter, complaint"
+  - name: inbox_prioritization
+    difficulty: medium
+    description: "Rank 5 emails from most to least urgent. Scored by Kendall tau correlation."
+  - name: email_tagging
+    difficulty: medium-hard
+    description: "Apply all relevant tags from a 12-tag vocabulary. Scored by F1."
+  - name: reply_drafting
+    difficulty: hard
+    description: "Draft a professional reply covering all required talking points."
+  - name: email_summarization
+    difficulty: medium
+    description: "Summarize an email in 10-60 words covering all key points."
+  - name: thread_classification
+    difficulty: hard
+    description: "Classify a multi-turn email thread and extract the key issue."
+
+observation_space:
+  type: object
+  properties:
+    task_name: {type: string}
+    email_id: {type: string}
+    subject: {type: string}
+    sender: {type: string}
+    sender_trust_score: {type: number, description: "0.0=untrusted, 1.0=fully trusted (exclusive bounds)"}
+    body: {type: string}
+    thread: {type: array, description: "Multi-turn messages for thread tasks"}
+    available_categories: {type: array}
+    available_tags: {type: array}
+    emails_to_rank: {type: array, description: "5 emails for prioritization task"}
+    step: {type: integer}
+    done: {type: boolean}
+
+action_space:
+  type: object
+  properties:
+    task: {type: string, description: "Must match current task_name"}
+    action: {type: object, description: "Task-specific action payload"}
+
+reward:
+  type: float
+  range: "(0.0, 1.0)"
+  note: "Strictly between 0 and 1 — endpoints excluded. All graders clamp to (0.001, 0.999)."
+
+episode:
+  max_steps: 1
+  reset_on_done: true

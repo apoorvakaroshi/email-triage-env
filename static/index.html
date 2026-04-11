@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EmailTriageEnv</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f3f4f6;
+      color: #1f2937;
+      min-height: 100vh;
+    }
+
+    /* ── Hero ──────────────────────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(135deg, #1e3a8a 0%, #0e7490 55%, #0891b2 100%);
+      color: #fff;
+      text-align: center;
+      padding: 64px 24px 72px;
+    }
+    .hero-icon { font-size: 2.8rem; margin-bottom: 12px; }
+    .hero h1 { font-size: 2.8rem; font-weight: 800; letter-spacing: -1px; }
+    .hero p {
+      margin-top: 14px;
+      font-size: 1.1rem;
+      opacity: 0.88;
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .badges {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+    .badge {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.30);
+      color: #fff;
+      border-radius: 999px;
+      padding: 6px 18px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      backdrop-filter: blur(4px);
+    }
+
+    /* ── Content ───────────────────────────────────────────────────────── */
+    .content { max-width: 960px; margin: 0 auto; padding: 48px 20px 80px; }
+
+    /* ── Stats ─────────────────────────────────────────────────────────── */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 52px;
+    }
+    .stat-card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 24px 16px;
+      text-align: center;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+    }
+    .stat-card .number {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #1e40af;
+      line-height: 1;
+    }
+    .stat-card .label {
+      font-size: 0.82rem;
+      color: #6b7280;
+      margin-top: 6px;
+      font-weight: 500;
+    }
+
+    /* ── Section headers ────────────────────────────────────────────────── */
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ── Task cards ─────────────────────────────────────────────────────── */
+    .tasks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 52px;
+    }
+    .task-card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 22px 18px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .task-card:hover { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(0,0,0,0.10); }
+    .task-icon { font-size: 1.8rem; margin-bottom: 10px; }
+    .task-name { font-size: 0.97rem; font-weight: 700; margin-bottom: 8px; }
+    .task-desc { font-size: 0.82rem; color: #6b7280; line-height: 1.5; margin-bottom: 12px; }
+    .difficulty {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 3px 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .d-easy    { background: #d1fae5; color: #065f46; }
+    .d-medium  { background: #fef3c7; color: #92400e; }
+    .d-medium-hard { background: #fed7aa; color: #9a3412; }
+    .d-hard    { background: #fee2e2; color: #991b1b; }
+
+    /* ── Features ───────────────────────────────────────────────────────── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 14px;
+      margin-bottom: 52px;
+    }
+    .feature-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 18px 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .feature-icon { font-size: 1.4rem; flex-shrink: 0; }
+    .feature-label { font-size: 0.85rem; font-weight: 600; color: #374151; }
+    .feature-sub { font-size: 0.76rem; color: #9ca3af; margin-top: 2px; }
+
+    /* ── Baseline scores ─────────────────────────────────────────────────── */
+    .scores-section { margin-bottom: 52px; }
+    .score-row {
+      background: #fff;
+      border-radius: 10px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 10px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+    .score-name { font-family: monospace; font-size: 0.88rem; color: #374151; min-width: 200px; }
+    .score-bar-wrap { flex: 1; background: #e5e7eb; border-radius: 999px; height: 10px; overflow: hidden; }
+    .score-bar { height: 100%; background: linear-gradient(90deg, #1e3a8a, #0891b2); border-radius: 999px; transition: width 1s ease; }
+    .score-val { font-weight: 700; font-size: 0.92rem; min-width: 46px; text-align: right; color: #1f2937; }
+    .score-check { color: #10b981; font-size: 1.1rem; }
+
+    /* ── API Endpoints ───────────────────────────────────────────────────── */
+    .endpoints-section { margin-bottom: 52px; }
+    .endpoint {
+      background: #fff;
+      border-radius: 10px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 10px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+    .method {
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      min-width: 50px;
+      text-align: center;
+    }
+    .get  { background: #dbeafe; color: #1d4ed8; }
+    .post { background: #dcfce7; color: #15803d; }
+    .ep-path { font-family: monospace; font-weight: 700; color: #1d4ed8; font-size: 0.92rem; min-width: 110px; }
+    .ep-desc { font-size: 0.85rem; color: #6b7280; }
+
+    /* ── Footer ─────────────────────────────────────────────────────────── */
+    footer { text-align: center; font-size: 0.80rem; color: #9ca3af; padding: 24px 0 40px; }
+    footer a { color: #6b7280; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 640px) {
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .hero h1 { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Hero ──────────────────────────────────────────────────────────────── -->
+<div class="hero">
+  <div class="hero-icon">📧</div>
+  <h1>EmailTriageEnv</h1>
+  <p>A real-world email triage environment for training and evaluating AI agents</p>
+  <div class="badges">
+    <span class="badge">✅ OpenEnv Compliant</span>
+    <span class="badge">🐳 Docker Ready</span>
+    <span class="badge">⚡ FastAPI</span>
+    <span class="badge">🤗 HF Spaces</span>
+  </div>
+</div>
+
+<!-- ── Content ───────────────────────────────────────────────────────────── -->
+<div class="content">
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat-card"><div class="number">6</div><div class="label">Tasks</div></div>
+    <div class="stat-card"><div class="number">15</div><div class="label">Emails</div></div>
+    <div class="stat-card"><div class="number">&lt; 1.0</div><div class="label">Max Reward (strict)</div></div>
+    <div class="stat-card"><div class="number">100%</div><div class="label">Deterministic</div></div>
+  </div>
+
+  <!-- Tasks -->
+  <div class="section-title">📋 Tasks</div>
+  <div class="tasks-grid">
+    <div class="task-card">
+      <div class="task-icon">🏷️</div>
+      <div class="task-name">Email Classification</div>
+      <div class="task-desc">Classify emails into 7 categories: billing, support, spam, urgent and more</div>
+      <span class="difficulty d-easy">Easy</span>
+    </div>
+    <div class="task-card">
+      <div class="task-icon">📊</div>
+      <div class="task-name">Inbox Prioritization</div>
+      <div class="task-desc">Rank 5 emails from most to least urgent using Kendall tau scoring</div>
+      <span class="difficulty d-medium">Medium</span>
+    </div>
+    <div class="task-card">
+      <div class="task-icon">🏷️</div>
+      <div class="task-name">Email Tagging</div>
+      <div class="task-desc">Apply all relevant tags from a 12-tag vocabulary, scored by F1</div>
+      <span class="difficulty d-medium-hard">Medium-Hard</span>
+    </div>
+    <div class="task-card">
+      <div class="task-icon">✍️</div>
+      <div class="task-name">Reply Drafting</div>
+      <div class="task-desc">Draft professional replies covering all required talking points</div>
+      <span class="difficulty d-hard">Hard</span>
+    </div>
+    <div class="task-card">
+      <div class="task-icon">📝</div>
+      <div class="task-name">Email Summarization</div>
+      <div class="task-desc">Summarize workplace emails in 10-60 words covering all key points</div>
+      <span class="difficulty d-medium">Medium</span>
+    </div>
+    <div class="task-card">
+      <div class="task-icon">🗂️</div>
+      <div class="task-name">Thread Classification</div>
+      <div class="task-desc">Classify multi-turn email threads and extract the key issue</div>
+      <span class="difficulty d-hard">Hard</span>
+    </div>
+  </div>
+
+  <!-- Unique Features -->
+  <div class="section-title">✨ Unique Features</div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">🎭</div>
+      <div>
+        <div class="feature-label">Adversarial Emails</div>
+        <div class="feature-sub">Phishing &amp; social engineering detection</div>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔗</div>
+      <div>
+        <div class="feature-label">Multi-Turn Threads</div>
+        <div class="feature-sub">3 realistic back-and-forth email chains</div>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔒</div>
+      <div>
+        <div class="feature-label">Sender Trust Scores</div>
+        <div class="feature-sub">Per-email domain trust signals</div>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📐</div>
+      <div>
+        <div class="feature-label">Strict Score Range</div>
+        <div class="feature-sub">All rewards in open interval (0, 1)</div>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🧮</div>
+      <div>
+        <div class="feature-label">Kendall Tau Ranking</div>
+        <div class="feature-sub">Graded ordering for prioritization</div>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎯</div>
+      <div>
+        <div class="feature-label">F1 Tag Scoring</div>
+        <div class="feature-sub">Partial credit for tag overlap</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Baseline Scores -->
+  <div class="section-title scores-section">📊 Baseline Scores</div>
+  <div id="scores">
+    <div class="score-row">
+      <div class="score-name">email_classification</div>
+      <div class="score-bar-wrap"><div class="score-bar" style="width:90%"></div></div>
+      <div class="score-val">0.90</div>
+      <div class="score-check">✅</div>
+    </div>
+    <div class="score-row">
+      <div class="score-name">inbox_prioritization</div>
+      <div class="score-bar-wrap"><div class="score-bar" style="width:78%"></div></div>
+      <div class="score-val">0.78</div>
+      <div class="score-check">✅</div>
+    </div>
+    <div class="score-row">
+      <div class="score-name">email_tagging</div>
+      <div class="score-bar-wrap"><div class="score-bar" style="width:74%"></div></div>
+      <div class="score-val">0.74</div>
+      <div class="score-check">✅</div>
+    </div>
+    <div class="score-row">
+      <div class="score-name">reply_drafting</div>
+      <div class="score-bar-wrap"><div class="score-bar" style="width:71%"></div></div>
+      <div class="score-val">0.71</div>
+      <div class="score-check">✅</div>
+    </div>
+    <div class="score-row">
+      <div class="score-name">email_summarization</div>
+      <div class="score-bar-wrap"><div class="score-bar" style="width:80%"></div></div>
+      <div class="score-val">0.80</div>
+      <div class="score-check">✅</div>
+    </div>
+    <div class="score-row">
+      <div class="score-name">thread_classification</div>
+      <div class="score-bar-wrap"><div class="score-bar" style="width:68%"></div></div>
+      <div class="score-val">0.68</div>
+      <div class="score-check">✅</div>
+    </div>
+  </div>
+
+  <!-- API Endpoints -->
+  <div class="section-title" style="margin-top:52px">🔌 API Endpoints</div>
+  <div class="endpoints-section">
+    <div class="endpoint">
+      <span class="method get">GET</span>
+      <span class="ep-path">/health</span>
+      <span class="ep-desc">Liveness probe</span>
+    </div>
+    <div class="endpoint">
+      <span class="method get">GET</span>
+      <span class="ep-path">/tasks</span>
+      <span class="ep-desc">List all tasks</span>
+    </div>
+    <div class="endpoint">
+      <span class="method post">POST</span>
+      <span class="ep-path">/reset</span>
+      <span class="ep-desc">Reset environment, get initial observation</span>
+    </div>
+    <div class="endpoint">
+      <span class="method post">POST</span>
+      <span class="ep-path">/step</span>
+      <span class="ep-desc">Take action, get reward and next observation</span>
+    </div>
+    <div class="endpoint">
+      <span class="method get">GET</span>
+      <span class="ep-path">/state</span>
+      <span class="ep-desc">Get current environment state</span>
+    </div>
+    <div class="endpoint">
+      <span class="method get">GET</span>
+      <span class="ep-path">/docs</span>
+      <span class="ep-desc">Interactive API documentation (Swagger)</span>
+    </div>
+    <div class="endpoint">
+      <span class="method get">GET</span>
+      <span class="ep-path">/redoc</span>
+      <span class="ep-desc">Alternative API documentation (ReDoc)</span>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Built by <a href="https://huggingface.co/appuk10">Apoorva Karoshi</a> &nbsp;|&nbsp;
+  Powered by <a href="https://openenv.dev">OpenEnv</a> &amp;
+  <a href="https://huggingface.co">Hugging Face</a>
+</footer>
+
+</body>
+</html>
