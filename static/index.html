@@ -16,7 +16,7 @@
 
     /* ── Hero ──────────────────────────────────────────────────────────── */
     .hero {
-      background: linear-gradient(135deg, #1a237e 0%, #0277bd 50%, #00838f 100%);
+      background: linear-gradient(135deg, #1e3a8a 0%, #0e7490 55%, #0891b2 100%);
       color: #fff;
       text-align: center;
       padding: 64px 24px 72px;
@@ -187,6 +187,10 @@
     footer a { color: #6b7280; text-decoration: none; }
     footer a:hover { text-decoration: underline; }
 
+    .ep-arrow { margin-left: auto; color: #9ca3af; font-size: 1rem; }
+    a.endpoint { text-decoration: none; color: inherit; cursor: pointer; }
+    a.endpoint:hover { background: #f0f9ff; border-left: 3px solid #1d4ed8; }
+
     @media (max-width: 640px) {
       .stats { grid-template-columns: repeat(2, 1fr); }
       .hero h1 { font-size: 2rem; }
@@ -351,41 +355,48 @@
   <!-- API Endpoints -->
   <div class="section-title" style="margin-top:52px">🔌 API Endpoints</div>
   <div class="endpoints-section">
-    <div class="endpoint">
+    <a class="endpoint" href="/health" target="_blank">
       <span class="method get">GET</span>
       <span class="ep-path">/health</span>
       <span class="ep-desc">Liveness probe</span>
-    </div>
-    <div class="endpoint">
+      <span class="ep-arrow">↗</span>
+    </a>
+    <a class="endpoint" href="/tasks" target="_blank">
       <span class="method get">GET</span>
       <span class="ep-path">/tasks</span>
       <span class="ep-desc">List all tasks</span>
-    </div>
-    <div class="endpoint">
+      <span class="ep-arrow">↗</span>
+    </a>
+    <a class="endpoint" href="/docs#/default/reset_reset_post" target="_blank">
       <span class="method post">POST</span>
       <span class="ep-path">/reset</span>
       <span class="ep-desc">Reset environment, get initial observation</span>
-    </div>
-    <div class="endpoint">
+      <span class="ep-arrow">↗</span>
+    </a>
+    <a class="endpoint" href="/docs#/default/step_step_post" target="_blank">
       <span class="method post">POST</span>
       <span class="ep-path">/step</span>
       <span class="ep-desc">Take action, get reward and next observation</span>
-    </div>
-    <div class="endpoint">
+      <span class="ep-arrow">↗</span>
+    </a>
+    <a class="endpoint" href="/state" target="_blank">
       <span class="method get">GET</span>
       <span class="ep-path">/state</span>
       <span class="ep-desc">Get current environment state</span>
-    </div>
-    <div class="endpoint">
+      <span class="ep-arrow">↗</span>
+    </a>
+    <a class="endpoint" href="/docs" target="_blank">
       <span class="method get">GET</span>
       <span class="ep-path">/docs</span>
       <span class="ep-desc">Interactive API documentation (Swagger)</span>
-    </div>
-    <div class="endpoint">
+      <span class="ep-arrow">↗</span>
+    </a>
+    <a class="endpoint" href="/redoc" target="_blank">
       <span class="method get">GET</span>
       <span class="ep-path">/redoc</span>
       <span class="ep-desc">Alternative API documentation (ReDoc)</span>
-    </div>
+      <span class="ep-arrow">↗</span>
+    </a>
   </div>
 
 </div>
