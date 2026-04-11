@@ -2,7 +2,7 @@
 title: EmailTriageEnv
 emoji: 📧
 colorFrom: blue
-colorTo: blue
+colorTo: green
 sdk: docker
 pinned: false
 ---
