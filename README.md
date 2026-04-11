@@ -1,3 +1,11 @@
+---
+title: EmailTriageEnv
+emoji: 📧
+colorFrom: blue
+colorTo: blue
+sdk: docker
+pinned: false
+---
 # 📧 EmailTriageEnv
 
 > A real-world email triage environment for training and evaluating AI agents.
