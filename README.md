@@ -187,4 +187,4 @@ email-triage-env/
 
 ---
 
-Built with love by [Apoorva Karoshi](https://huggingface.co/appuk10) · Powered by [OpenEnv](https://openenv.dev) & [Hugging Face](https://huggingface.co)
+Built by [Apoorva Karoshi](https://huggingface.co/appuk10) · Powered by [OpenEnv](https://openenv.dev) & [Hugging Face](https://huggingface.co)
