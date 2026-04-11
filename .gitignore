@@ -40,7 +40,6 @@ logs/
 
 # uv / pyproject (not needed for HF deployment)
 uv.lock
-pyproject.toml
 
 # Local testing
 validate_local.py
